@@ -1,6 +1,8 @@
 package com.lqb.example.hudi
 
+import org.apache.flink.api.common.RuntimeExecutionMode
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
+import org.apache.flink.table.api.TableResult
 import org.apache.flink.table.api.bridge.scala.StreamTableEnvironment
 
 /**
@@ -10,12 +12,16 @@ import org.apache.flink.table.api.bridge.scala.StreamTableEnvironment
 object HUDISELECT {
   def main(args: Array[String]): Unit = {
     val environment: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
+    environment.setRuntimeMode(RuntimeExecutionMode.BATCH)
     val tableEnvironment: StreamTableEnvironment = StreamTableEnvironment.create(environment)
+    tableEnvironment.getConfig.getConfiguration.setString("sql-client.execution.result-mode","CHANGELOG");
+
+
     val basePath: String = "hdfs://lqbaliyun:9000/datas/hudi-warehouse/customer_hudi"
     val customer_hudi_sink: String =
       s"""
          |CREATE TABLE if not exists customer_hudi(
-         | id STRING,
+         | id INT,
          | name STRING,
          | address STRING,
          | gender INT,
@@ -30,6 +36,7 @@ object HUDISELECT {
          |  'write.precombine.field' = 'create_time'
          |)""".stripMargin
     tableEnvironment.executeSql(customer_hudi_sink)
-    tableEnvironment.executeSql("select * from customer_hudi").print()
+    val tableResult: TableResult = tableEnvironment.executeSql("select * from customer_hudi")
+    tableResult.print()
   }
 }

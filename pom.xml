@@ -17,8 +17,8 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-table-api-scala-bridge_2.12</artifactId>
-            <version>1.12.2</version>
+            <artifactId>flink-table-api-scala-bridge_2.11</artifactId>
+            <version>1.12.1</version>
         </dependency>
 
         <dependency>
@@ -28,41 +28,35 @@
         </dependency>
 
         <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-table-planner-blink_2.12</artifactId>
-            <version>1.12.2</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.23</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-clients_2.12</artifactId>
-            <version>1.12.2</version>
+            <artifactId>flink-table-planner-blink_2.11</artifactId>
+            <version>1.12.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-clients_2.11</artifactId>
+            <version>1.12.1</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.hudi</groupId>
-            <artifactId>hudi-flink-bundle_2.12</artifactId>
+            <artifactId>hudi-flink-bundle_2.11</artifactId>
             <version>0.9.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.hadoop</groupId>
-            <artifactId>hadoop-common</artifactId>
-            <version>3.3.2</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-client -->
-        <dependency>
-            <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-client</artifactId>
             <version>3.3.2</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-runtime-web_2.12</artifactId>
-            <version>1.12.2</version>
-        </dependency>
+        
 
     </dependencies>
 </project>
