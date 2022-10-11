@@ -15,18 +15,14 @@ object MySQL2HUDI {
     val environment: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
     environment.setStateBackend(new FsStateBackend("hdfs://lqbaliyun:9000/flink/checkpoints"))
     //每间隔2000ms进行CheckPoint
-    environment.enableCheckpointing(2000)
+    environment.enableCheckpointing(5000)
     //设置CheckPoint模式
     environment.getCheckpointConfig.setCheckpointingMode(CheckpointingMode.EXACTLY_ONCE);
-    //CheckPoint超时时间设置为50000ms
-    environment.getCheckpointConfig.setCheckpointTimeout(50000);
-    //最大并发的CheckPoint数量
-    environment.getCheckpointConfig.setMaxConcurrentCheckpoints(1)
     val tableEnvironment: StreamTableEnvironment = StreamTableEnvironment.create(environment)
     val customer_binlog_source: String =
       """
         |CREATE TABLE customer_binlog (
-        | id INT,
+        | id STRING,
         | name STRING,
         | address STRING,
         | gender INT,
@@ -45,7 +41,8 @@ object MySQL2HUDI {
     tableEnvironment.executeSql(customer_binlog_source)
 
     //视图添加分区字段
-    val table: Table = tableEnvironment.sqlQuery("select *,DATE_FORMAT(create_time,'yyyyMMdd') as curDate  from customer_binlog")
+    val table: Table = tableEnvironment.sqlQuery("select id,name,address,gender,create_time," +
+      "DATE_FORMAT(create_time,'yyyyMMdd') as curDate  from customer_binlog")
     tableEnvironment.createTemporaryView("tempView", table)
 
     //hudi
@@ -54,7 +51,7 @@ object MySQL2HUDI {
       s"""
          |
          |CREATE TABLE if not exists customer_hudi(
-         | id INT,
+         | id STRING,
          | name STRING,
          | address STRING,
          | gender INT,

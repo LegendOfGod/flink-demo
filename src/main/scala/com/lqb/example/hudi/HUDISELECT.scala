@@ -21,7 +21,7 @@ object HUDISELECT {
     val customer_hudi_sink: String =
       s"""
          |CREATE TABLE if not exists customer_hudi(
-         | id INT,
+         | id STRING,
          | name STRING,
          | address STRING,
          | gender INT,
