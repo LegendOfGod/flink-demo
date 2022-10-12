@@ -30,10 +30,10 @@ object MySQL2HUDI {
         | PRIMARY KEY(id) NOT ENFORCED
         |) WITH (
         | 'connector' = 'mysql-cdc',
-        | 'hostname' = 'localhost',
+        | 'hostname' = 'lqbaliyun',
         | 'port' = '3306',
         | 'username' = 'root',
-        | 'password' = 'root',
+        | 'password' = '19930908@Lqb',
         | 'database-name' = 'test',
         | 'table-name' = 'customer'
         |)
