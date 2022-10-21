@@ -17,7 +17,7 @@ object MySQL2HUDI {
     //每间隔2000ms进行CheckPoint
     environment.enableCheckpointing(5000)
     //设置CheckPoint模式
-    environment.getCheckpointConfig.setCheckpointingMode(CheckpointingMode.EXACTLY_ONCE);
+    environment.getCheckpointConfig.setCheckpointingMode(CheckpointingMode.AT_LEAST_ONCE);
     val tableEnvironment: StreamTableEnvironment = StreamTableEnvironment.create(environment)
     val customer_binlog_source: String =
       """
